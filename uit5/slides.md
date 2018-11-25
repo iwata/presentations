@@ -7,11 +7,15 @@ Theme: Courier,7
 [.hide-footer]
 # ゆるふわに既存プロジェクトを*TypeScript*に移行してみた
 ## in UIT #5
+![fit original](./img/vue.png)
 
 ---
 
 # About me
 
+![80% original](./img/iwata.jpg)
+
+- [@iwata](https://github.com/iwata)
 - Software Engineer
 	- 株式会社エスエムエス
 - Vue歴約4年
@@ -29,9 +33,7 @@ Theme: Courier,7
 [.hide-footer]
 [.slidenumbers: false]
 
-# eGPU + 4K x 2
-
-![inline fill](./img/desk.jpg)
+![fit](./img/desk.jpg)
 
 ---
 
