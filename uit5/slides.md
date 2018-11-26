@@ -23,8 +23,10 @@ Theme: Courier,7
 	- TypeScript歴1ヶ月:beginner::beginner:
 - Editor: Vim(NeoVim)
 - Terminal: [Alacritty](https://github.com/jwilm/alacritty)
-	- `A cross-platform, GPU-accelerated terminal emulator`
-- My Boom: [Blackmagic eGPU](https://www.blackmagicdesign.com/jp/products/blackmagicegpu/)
+	- A cross-platform, GPU-accelerated terminal emulator
+- マイブーム:
+	- [Blackmagic eGPU](https://www.blackmagicdesign.com/jp/products/blackmagicegpu/)
+	- [Logicool Spotlight](https://www.logicool.co.jp/ja-jp/product/spotlight-presentation-remote) :new:
 
 ^ TSも初採用なんであんまり詳しくないです
 そんな人でもTS移行できるYO
@@ -87,6 +89,7 @@ Theme: Courier,7
 	- 思考錯誤した結果:sweat:
 
 ^ 開発停止は普通だと受け入れられないと思うのでやり方考える必要ありそう
+4weeksぐらいで移行した
 
 ---
 
@@ -332,6 +335,8 @@ rule追加:pray:
 - 罠多いのでTSLintの方がいいかも🤔
 	- JSとの共存もし易そう
 
+^ versionによって動いたり、動かなかったりするruleあるんで、CIでLintしつつ[Dependency management](https://github.com/marketplace/category/dependency-management)入れなれないとつらい
+
 ---
 
 # Componentの移行
@@ -571,6 +576,8 @@ module.exports = {
 }
 ```
 
+^ Jest以外だとAVA, Mochaとか?
+
 ---
 
 # [fit] `shallowMount/mount`時のComponentの型
@@ -581,7 +588,7 @@ module.exports = {
 ```typescript
 const wrapper = shallowMount(Hoge)
 wrapper.vm.fuga() // Error
-// generics
+// 型引数あり
 const wrapper = shallowMount<Hoge>(Hoge)
 wrapper.vm.fuga() // Error
 ```
@@ -601,6 +608,8 @@ vm.fuga()
 ```
 
 [^12]: 自前で型定義書けばいけるけどさすがに面倒
+
+^ Vue本体のissueで議論されてる(?)っぽいので将来改善されそう
 
 ---
 
@@ -671,7 +680,7 @@ expect(commit).toHaveBeenCalledWith('setUser', ...)
 
 [^14]: jes.fn()の[型定義](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/jest/index.d.ts#L110-L117)をみるとわかる
 
-^TSのsyntaxhighlightがイマイチきかない.
+^TSのsyntaxhighlightがイマイチきかない…orz
 
 ---
 
@@ -706,7 +715,8 @@ expect(commit).toHaveBeenCalledWith('setUser', ...)
 
 ---
 
-# [fit] TypeScriptいつやるの?<br>いまでしょ🤗
+# [fit] Vue TypeScriptの~~ツラミ~~ノウハウをシェアして<br>型安全な世界へ🤗
+
 ---
 
 # ありがとうございました:clap::clap:
