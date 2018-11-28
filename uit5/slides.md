@@ -26,7 +26,6 @@ Theme: Courier,7
 	- A cross-platform, GPU-accelerated terminal emulator
 - マイブーム:
 	- [Blackmagic eGPU](https://www.blackmagicdesign.com/jp/products/blackmagicegpu/)
-	- [Logicool Spotlight](https://www.logicool.co.jp/ja-jp/product/spotlight-presentation-remote) :new:
 
 ^ TSも初採用なんであんまり詳しくないです
 そんな人でもTS移行できるYO
@@ -102,7 +101,7 @@ Theme: Courier,7
 1. test
 
 - testがあるのでtestが通ることを確認しつつ移行:green_heart:
-	- 最後はtestも移行
+	- 最後にtestも移行
 
 ---
 
@@ -124,7 +123,7 @@ Theme: Courier,7
 - `@vue/cli`でTSを有効にした場合に使われるものを雛形にする
 	- [vue\-cli/tsconfig\.json](https://github.com/vuejs/vue-cli/blob/dev/packages/%40vue/cli-plugin-typescript/generator/template/tsconfig.json)
 - 但し、`allowJs`だけ一時的にtrueに
-	- JSファイルが混在するので、移行完了したらfalse
+	- 移行中はJSファイルが混在するので移行完了したらfalse
 - `strict:true`なのでimplicit anyは弾く
 
 ---
@@ -197,7 +196,7 @@ prettierの相性はどうかわからないけど.
 	- TypeScriptをESTree互換の形に変換し、ESLintを適用できるようにするパーサがプラグイン[^5]
 - eslint-plugin-typescript
 	- TypeScriptの用のルール
-- これらにいくつか罠がある
+- これらにいくつか~~罠~~バグがある:bug:
 
 [^5]: [Vue \+ TypeScriptなプロジェクトにESLintを導入する](https://joe-re.hatenablog.com/entry/2018/01/02/230806)
 
@@ -205,29 +204,25 @@ prettierの相性はどうかわからないけど.
 
 ## Lintのハマりポイント `no-unused-vars`
 
-[\[no\-unused\-vars\] False positive for unused vars inside decorator arguments · Issue \#126 · bradzacher/eslint\-plugin\-typescript](https://github.com/bradzacher/eslint-plugin-typescript/issues/126)
-
 [.code-highlight: all]
-[.code-highlight: 6]
-```typescript
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+[.code-highlight: 1,6]
+```ts
+import {firestore} from 'firebase/app'	// Error
+import DocRepository from '~/repository/doc'
 
-@Component({
-  components: {
-    HelloWorld
-  }
-})
-export default class App extends Vue {}
+export const fetchDoc = (
+  id: string
+): Promise<firestore.DocumentData | undefined> => {
+	const repo = new DocRepository()
+	return repo.find(id)
+}
 ```
 
-`error: 'HelloWorld' is defined but never used (no-unused-vars)`
+`error: 'firestore' is defined but never used (no-unused-vars)`
 
 ---
 
-# [fit]Decoratorの引数をみてくれない:sob:[^6]
-
-[^6]: ちなみにEvan Youもレポートしてる: [False positive for unused vars inside decorator arguments · Issue \#445 · eslint/typescript\-eslint\-parser](https://github.com/eslint/typescript-eslint-parser/issues/445)
+# [fit]型引数にしか使ってない変数がエラーになる:sob:
 
 ---
 
@@ -241,53 +236,56 @@ rule追加:pray:
 }
 ```
 
+- [Issue \#179 · bradzacher/eslint\-plugin\-typescript](https://github.com/bradzacher/eslint-plugin-typescript/issues/179)
 - `tsconfig.json`の`noUnusedLocals`でいけるんじゃね?
-- `tsc`が`<template></template>`内の参照をみてくれずにコンパイルエラーになる:joy:
+- SFCで`<template></template>`内の参照を`tsc`がみてくれずにコンパイルエラーになる:joy:
 	- `data`用に宣言したpropertyとかが使われてないってエラー
-	- `TS6133: 'isActive' is declared but its value is never read.`
+
+^ `TS6133: 'xXX' is declared but its value is never read.`
 
 ---
 
-# Lintのハマりポイント `no-undef`
+# Lintのハマりポイント `new-cap`
 
-[Interface produces no\-undef errors · Issue \#437 · eslint/typescript\-eslint\-parser](https://github.com/eslint/typescript-eslint-parser/issues/437)
+[.code-highlight: all]
+[.code-highlight: 5-7]
+```ts
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import Hello from './hello.vue'
 
-```typescript
-interface Runnable {
-  run(): Result
-  toString(): string
+@Component({	// Error
+  components: {Hello}
+})
+export default class Header extends Vue {
+   private title = ''
 }
+</script>
 ```
 
-```
-./Runnable.ts
-  1:11  error  'Runnable' is not defined  no-undef
-  2:3   error  'run' is not defined       no-undef
-  2:11  error  'Result' is not defined    no-undef
+`A function with a name starting with an uppercase letter should only be used as a constructor.`
 
-✖ 3 problems (3 errors, 0 warnings)
-```
-
-^ コードはissueにあがってるやつ
+^ 自分でissueあげた
 
 ---
 
-# [fit]型指定が軒並 `not defined`:sob:
+# [fit]大文字ではじまるDecoratorに引数があるとエラー:sob:
 
 ---
 
-# Lintのハマりポイント `no-undef`
-
-> Namely, you can safely disable no-undef for .ts files because TypeScript will fail to compile with undefined vars. The rule is redundant.
--- [Kevin Cooper](https://github.com/eslint/typescript-eslint-parser/issues/437#issuecomment-435526531)
+# Lintのハマりポイント `new-cap`
 
 rule追加:pray:
 
 ```javascript
 "rules": {
-	"no-undef": "off"
+	"new-cap": "off"
 }
 ```
+
+- [\[new\-cap\] false positives about upper camel cased decorators · Issue \#569 · eslint/typescript\-eslint\-parser](https://github.com/eslint/typescript-eslint-parser/issues/569)
+	- 自分でissueあげた
+- ちなみに大文字ではじまってても引数がないDecoratorなら問題ない
 
 ---
 
@@ -330,12 +328,13 @@ rule追加:pray:
 
 - ESLintの以下のルールをoffにする
 	- `no-unused-vars`
-	- `no-undef`
+	- `new-cap`
 	- `typescript/adjacent-overload-signatures`
 - 罠多いのでTSLintの方がいいかも🤔
 	- JSとの共存もし易そう
 
 ^ versionによって動いたり、動かなかったりするruleあるんで、CIでLintしつつ[Dependency management](https://github.com/marketplace/category/dependency-management)入れなれないとつらい
+TSLintもprettierと併用しようとすると罠ある?
 
 ---
 
@@ -361,14 +360,15 @@ declare module '*.vue' {
 
 # `vue-convert`
 
-Class styleにするため[vue\-convert](https://www.npmjs.com/package/vue-convert)を使って雛形を作る
+まずはClass styleにするため[vue\-convert](https://www.npmjs.com/package/vue-convert)を使って変換
 
 ```sh
 > yarn global add vue-convert
 > vue-convert -s class components/side-menu.vue
 ```
 
-- できたファイルをdecoratorとかで書き直していくとだいぶショートカットできる
+- だいぶショートカットできる
+	- できたファイルをTSっぽく修正する
 - compileが通って、testが通れば大体:ok_hand:
 
 ---
@@ -411,8 +411,8 @@ export default class LoggedIn extends Vue {
 
 # `$refs`の型定義
 
-> ref は要素または子コンポーネントに参照を登録するために使用されます。参照は親コンポーネントの $refs オブジェクトのもとに登録されます。[^9]
--- *Vue official docs*
+> ref は要素または子コンポーネントに参照を登録するために使用されます。参照は親コンポーネントの $refs オブジェクトのもとに登録されます。
+-- *Vue official docs*[^9]
 
 [^9]: https://jp.vuejs.org/v2/api/#ref
 
@@ -480,7 +480,7 @@ async onInput(event: Event) {
 - `Property 'value' does not exist on type 'EventTarget'.`
 - `target`がどのElement型なのか分からない[^11]
 
-[^11]: [型定義](https://github.com/Microsoft/TypeScript/blob/master/src/lib/dom.generated.d.ts#L4972)だと`EventTarget | null`になっている
+[^11]: [型定義](https://github.com/Microsoft/TypeScript/blob/master/src/lib/dom.generated.d.ts#L4972)だと`target`は`EventTarget | null`になっている
 
 ---
 
@@ -520,6 +520,9 @@ export {
   mixins, State, Mutation, Action, namespace
 }
 ```
+
+^ 色んな3rd libに使いたいdecoratorとかが散らばっているので
+ファイル名はなんでもいい
 
 ---
 # import側
@@ -580,22 +583,21 @@ module.exports = {
 
 ---
 
-# [fit] `shallowMount/mount`時のComponentの型
+# [fit] `mount/shallowMount`時のComponentの型
 
-- 例
-	- `Hoge` Componentの`fuga()`メソッドの挙動をテストしたい
+例: `Hello` Componentの`world()`メソッドの挙動をテストしたい
 
 ```typescript
-const wrapper = shallowMount(Hoge)
+const wrapper = shallowMount(Hello)
 wrapper.vm.fuga() // Error
 // 型引数あり
-const wrapper = shallowMount<Hoge>(Hoge)
+const wrapper = shallowMount<Hello>(Hello)
 wrapper.vm.fuga() // Error
 ```
 
 ---
 
-# [fit] `shallowMount/mount`時のComponentの型
+# [fit] `mount/shallowMount`時のComponentの型
 
 - `Hoge`をうまく型として認識してくれない
 	- [vuetype](https://github.com/ktsn/vuetype)で型定義生成したいけど試したらエラーになった:tired_face:[^12]
@@ -623,9 +625,11 @@ vm.fuga()
 - `context`をmockにしてUnit Testしたい
 	- `commit`を`jest.fn()`でmockしたい
 
+^ Vue Fes Japanの発表
+
 ---
 
-# type safeなActionsの例[^13]
+# type safeなActionsの例
 
 [.code-highlight: all]
 [.code-highlight: 8,11]
@@ -641,15 +645,15 @@ interface UserActions<S, R> extends ActionTree<S, R> {
 }
 export const actions: UserActions<UserState, any> = {
   login({commit}, payload) {
-  	...
-  	commit('setUser', ...)
+  	︙
+    commit('setUser', ...)
   }
 }
 ```
 
 `ActionContext`をtype safeにmockできればよい
 
-[^13]: NuxtのModule mode想定のコード
+^ NuxtのModule mode想定
 
 ^login actionをtestしたい.
 TSでのVuexの書き方は流派?があるが、今回はofficialなVuexの型定義のみを用いた
@@ -660,10 +664,9 @@ TSでのVuexの書き方は流派?があるが、今回はofficialなVuexの型�
 
 [.code-highlight: all]
 [.code-highlight: 4-8,10]
-```typescript
+```ts
 import {ActionContext} from 'vuex'
 import * as store from '~/store/user'
-
 const commit = jest.fn()
 const MockContext = jest.fn<ActionContext<store.UserState, any>>(() => ({
   commit
@@ -680,7 +683,8 @@ expect(commit).toHaveBeenCalledWith('setUser', ...)
 
 [^14]: jes.fn()の[型定義](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/jest/index.d.ts#L110-L117)をみるとわかる
 
-^TSのsyntaxhighlightがイマイチきかない…orz
+^ TSのsyntaxhighlightがイマイチきかない…orz
+describeとかは省略
 
 ---
 
@@ -702,7 +706,7 @@ expect(commit).toHaveBeenCalledWith('setUser', ...)
 59
 ```
 
-**After**
+**4 Weeks After**
 
 ```bash
 > fd -e js | wc -l
@@ -715,7 +719,7 @@ expect(commit).toHaveBeenCalledWith('setUser', ...)
 
 ---
 
-# [fit] Vue TypeScriptの~~ツラミ~~ノウハウをシェアして<br>型安全な世界へ🤗
+# [fit] Vue TypeScriptの~~ツラミ~~ノウハウをシェアして<br>Vuefinityしよう🤗
 
 ---
 
