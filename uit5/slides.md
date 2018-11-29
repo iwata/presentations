@@ -202,7 +202,7 @@ prettierの相性はどうかわからないけど.
 
 ---
 
-## Lintのハマりポイント `no-unused-vars`
+## False Positive `no-unused-vars`
 
 [.code-highlight: all]
 [.code-highlight: 1,6]
@@ -226,7 +226,7 @@ export const fetchDoc = (
 
 ---
 
-# [fit] Lintのハマりポイント `no-unused-vars`
+# [fit] False Positive `no-unused-vars`
 
 rule追加:pray:
 
@@ -245,7 +245,7 @@ rule追加:pray:
 
 ---
 
-# Lintのハマりポイント `new-cap`
+# False Positive `new-cap`
 
 [.code-highlight: all]
 [.code-highlight: 5-7]
@@ -265,27 +265,29 @@ export default class Header extends Vue {
 
 `A function with a name starting with an uppercase letter should only be used as a constructor.`
 
-^ 自分でissueあげた
-
 ---
 
 # [fit]大文字ではじまるDecoratorに引数があるとエラー:sob:
 
 ---
 
-# Lintのハマりポイント `new-cap`
+# False Positive `new-cap`
 
-rule追加:pray:
+Work around: [capIsNewExceptions](https://eslint.org/docs/rules/new-cap#capisnewexceptions)を指定する:innocent:
 
+[.code-highlight: all]
+[.code-highlight: 3-5]
 ```javascript
 "rules": {
-	"new-cap": "off"
+	"new-cap": ["error", {
+	  	"capIsNewExceptions": [
+	  	  "Component", "Prop", "Watch", "State", "Getter"
+	  	]
+	}]
 }
 ```
 
-- [\[new\-cap\] false positives about upper camel cased decorators · Issue \#569 · eslint/typescript\-eslint\-parser](https://github.com/eslint/typescript-eslint-parser/issues/569)
-	- 自分でissueあげた
-- ちなみに大文字ではじまってても引数がないDecoratorなら問題ない
+[Issue](https://github.com/eslint/typescript-eslint-parser/issues/569#issuecomment-442641720)あげたら教えてもらった
 
 ---
 
@@ -326,7 +328,7 @@ rule追加:pray:
 
 # Lintのまとめ
 
-- ESLintの以下のルールをoffにする
+- ESLintの以下のルールをoffにする or Option設定
 	- `no-unused-vars`
 	- `new-cap`
 	- `typescript/adjacent-overload-signatures`
@@ -719,7 +721,9 @@ describeとかは省略
 
 ---
 
-# [fit] Vue TypeScriptの~~ツラミ~~ノウハウをシェアして<br>Vuefinityしよう🤗
+![original](./img/shirt-vuefinity.png)
+
+[Get Free Shipping!](https://akryum.threadless.com/designs/vuefinity)
 
 ---
 
