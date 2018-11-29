@@ -62,7 +62,7 @@ Theme: Courier,7
 
 - 社内ツール
 - Nuxt(SSR)さわってみたかった
-- GAE SE Nodeさわってみたかった
+- [Google Appe Engine Node.js Standard Environment](https://cloud.google.com/appengine/docs/standard/nodejs/)さわってみたかった
 - Firebaseさわってみたかった
 
 ```sh
@@ -124,7 +124,7 @@ Theme: Courier,7
 	- [vue\-cli/tsconfig\.json](https://github.com/vuejs/vue-cli/blob/dev/packages/%40vue/cli-plugin-typescript/generator/template/tsconfig.json)
 - 但し、`allowJs`だけ一時的にtrueに
 	- 移行中はJSファイルが混在するので移行完了したらfalse
-- `strict:true`なのでimplicit anyは弾く
+- `strict:true`なのでimplicit anyは弾く:muscle:
 
 ---
 
@@ -193,9 +193,9 @@ prettierの相性はどうかわからないけど.
 # Linterのハマりポイント
 
 - typescript-eslint-parser
-	- TypeScriptをESTree互換の形に変換し、ESLintを適用できるようにするパーサがプラグイン[^5]
+	- TypeScriptをESTree互換の形に変換し、ESLintを適用できるようにするパーサプラグイン[^5]
 - eslint-plugin-typescript
-	- TypeScriptの用のルール
+	- TypeScript用のルール
 - これらにいくつか~~罠~~バグがある:bug:
 
 [^5]: [Vue \+ TypeScriptなプロジェクトにESLintを導入する](https://joe-re.hatenablog.com/entry/2018/01/02/230806)
@@ -287,14 +287,14 @@ Work around: [capIsNewExceptions](https://eslint.org/docs/rules/new-cap#capisnew
 }
 ```
 
-[Issue](https://github.com/eslint/typescript-eslint-parser/issues/569#issuecomment-442641720)あげたら教えてもらった
+[Issue](https://github.com/eslint/typescript-eslint-parser/issues/569#issuecomment-442641720)あげたら今朝教えてもらった:new:
 
 ---
 
 # [fit] Lintのハマりポイント [`typescript/adjacent-overload-signatures`](https://github.com/bradzacher/eslint-plugin-typescript/blob/master/docs/rules/adjacent-overload-signatures.md)
 
 `overload`の可読性を高めるためのルール
-:arrow_down:こういうのを警告してくれる
+:arrow_down:overloadの書き方を警告
 
 ```typescript
 export function foo(s: string): void;
@@ -309,7 +309,7 @@ export function foo(sn: string | number): void;
 
 [Unhandled exception in adjacent\-overload\-signatures · Issue \#49 · bradzacher/eslint\-plugin\-typescript](https://github.com/bradzacher/eslint-plugin-typescript/issues/49)
 
-- いまのところ有効にしてると`eslint`自体実行できずにエラーになる
+- いまのところ有効にしてると`ESlint`自体実行できず落ちる
 - ただしfixはされてるらしいのでリリースされたら使える
 
 ---
@@ -332,7 +332,7 @@ rule追加:pray:
 	- `no-unused-vars`
 	- `new-cap`
 	- `typescript/adjacent-overload-signatures`
-- 罠多いのでTSLintの方がいいかも🤔
+- 結構罠あるのでTSLintの方がいいかも🤔
 	- JSとの共存もし易そう
 
 ^ versionによって動いたり、動かなかったりするruleあるんで、CIでLintしつつ[Dependency management](https://github.com/marketplace/category/dependency-management)入れなれないとつらい
@@ -603,7 +603,7 @@ wrapper.vm.fuga() // Error
 
 - `Hoge`をうまく型として認識してくれない
 	- [vuetype](https://github.com/ktsn/vuetype)で型定義生成したいけど試したらエラーになった:tired_face:[^12]
-- 仕方なく`any`にキャストして回避:innocent:
+- 仕方なく`any`にキャストして回避:pray:
 
 ```typescript
 const wrapper = shallowMount(Hoge)
@@ -665,7 +665,7 @@ TSでのVuexの書き方は流派?があるが、今回はofficialなVuexの型�
 # Vuex Actionsのtest
 
 [.code-highlight: all]
-[.code-highlight: 4-8,10]
+[.code-highlight: 3-7,9]
 ```ts
 import {ActionContext} from 'vuex'
 import * as store from '~/store/user'
