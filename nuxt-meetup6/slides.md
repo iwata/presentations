@@ -36,11 +36,12 @@ Theme: Business Class,5
 # Agenda
 
 - TypeScript編
-	- module for TS
+	- Module for `ts-loader`
 	- Improve Source Map
 	- Testing about Middleware
 - SSR編
 	- GoogleAppEngine SE Node
+	- Demo
 
 ---
 
@@ -95,11 +96,12 @@ Theme: Business Class,5
 # Agenda(再掲)
 
 - TypeScript編[^1]
-	- module for TS
+	- Module for `ts-loader`
 	- Improve Source Map
 	- Testing about Middleware
 - SSR環境編
 	- GoogleAppEngine StandardEnviroment Node
+	- Demo
 
 [^1]: [UIT#5](https://slides.com/iwatamotonori/uit5)で話さなかったこと
 
@@ -539,6 +541,20 @@ test.each([
 
 ---
 
+# `package.json`
+
+`start`で`nuxt start`を実行
+
+```json
+{
+  "scripts": {
+  	"start": "nuxt start"
+  }
+}
+```
+
+---
+
 # `app.yaml`
 
 ```yaml
@@ -549,10 +565,13 @@ env_variables:
 
 - `0.0.0.0`で動く
 	- v2から[NUXT_HOST](https://nuxtjs.org/faq/host-port#with-nuxt_host-and-nuxt_port-env-variables)で指定できるようになった
+- たったこれだけで動く:+1:
 
 ---
 
 # secure: always
+
+Service Worker使いたかったら必須
 
 [.code-highlight: all]
 [.code-highlight: 2-5]
