@@ -561,6 +561,18 @@ env_variables:
 
 ---
 
+# 2nd gen的制限
+
+1st genで提供されていたベンダーロックイン的機能が使えない
+
+- [Memcache API](https://cloud.google.com/appengine/docs/standard/go/memcache/)使えない
+	- Memorystoreもいまのところ使えない
+- [Access Control](https://cloud.google.com/appengine/docs/standard/go/access-control)使えない
+- [Images API](https://cloud.google.com/appengine/docs/standard/go/images/)使えない
+- [Mail API](https://cloud.google.com/appengine/docs/standard/go/mail/)使えない
+
+---
+
 # ありがとうございました<br>:clap::clap:
 	
 ![original](https://c1.staticflickr.com/9/8610/15787583555_3cec80e07b_h.jpg)
