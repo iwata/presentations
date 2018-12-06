@@ -541,23 +541,54 @@ env_variables:
 
 ---
 
+# secure: always
+
+[.code-highlight: all]
+[.code-highlight: 2-5]
+```yaml
+runtime: nodejs10
+handlers:
+  - url: /.*
+    secure: always
+    script: auto
+env_variables:
+  NUXT_HOST: 0.0.0.0
+```
+
+---
 # with Edge Cache
 
 静的コンテンツのCDN配信
 
 [.code-highlight: all]
-[.code-highlight: 2-7]
+[.code-highlight: 2-9]
 ```yaml
 runtime: nodejs10
 handlers:
   - url: /_nuxt
     static_dir: .nuxt/dist/client
+    secure: always
   - url: /(.*\.(gif|png|jpg|ico|txt))$
     static_files: static/\1
     upload: static/.*\.(gif|png|jpg|ico|txt)$
+    secure: always
+  - url: /.*
+    secure: always
+    script: auto
 env_variables:
   NUXT_HOST: 0.0.0.0
 ```
+
+---
+
+# Auto Scaling
+
+- `app.yaml`内で設定
+	- [App Engine Scaling Config](https://qiita.com/sinmetal	/items/017e7aa395ff459fca7c)
+- Instance class
+- (min|max)_instances
+- (min|max)\_idle_instances
+- etc.
 
 ---
 
