@@ -19,11 +19,11 @@ Theme: Business Class,5
 	- 熊本出身
 - Software Engineer
 	- 株式会社エスエムエス(約1年半)
+- 好きな言語: Go
+- Editor: Vim(NeoVim)
 - Vue歴約4年
 	- Nuxt歴7ヶ月:beginner:
 	- TypeScript歴2ヶ月:beginner::beginner:
-- Editor: Vim(NeoVim)
-- Terminal: [Alacritty](https://github.com/jwilm/alacritty)
 
 ---
 
@@ -519,9 +519,9 @@ test.each([
 
 ---
 
-# Demo[^4]
+# Demo[^4] [^5]
 
-- Sample[^5]
+- Sample[^6]
 	- [https://github.com/iwata/nuxt-gae-se](https://github.com/iwata/nuxt-gae-se)
 	
 ```sh
@@ -537,7 +537,9 @@ test.each([
 
 [^4]: `gcp-build`のバグ直ると`yarn build`が不要になる
 
-[^5]: より詳しくは[Nuxt\.js v2とGAE/SE Node\.jsでSPA×SSR×PWA×サーバーレスを実現する](https://inside.dmm.com/entry/2018/11/06/nuxt2-pwa-gae-se)を参照
+[^5]: [FTL](https://github.com/GoogleCloudPlatform/runtimes-common/tree/master/ftl)で動いてるのでdeploy時になにをやっているのは[source](https://github.com/GoogleCloudPlatform/runtimes-common/tree/master/ftl/node)みると大体わかる
+
+[^6]: 詳しい手順は[Nuxt\.js v2とGAE/SE Node\.jsでSPA×SSR×PWA×サーバーレスを実現する](https://inside.dmm.com/entry/2018/11/06/nuxt2-pwa-gae-se)を参照
 
 ---
 
