@@ -99,7 +99,7 @@ Theme: Business Class,5
 	- Module for `ts-loader`
 	- Improve Source Map
 	- Testing about Middleware
-- SSR環境編
+- SSR実行環境編
 	- GoogleAppEngine StandardEnviroment Node
 	- Demo
 
@@ -113,8 +113,8 @@ Theme: Business Class,5
 	- [https://github.com/nuxt-community/typescript-template](https://github.com/nuxt-community/typescript-template)
 - `~/modules/typescript.js`などを用意して`ts-loader`の設定を書く
 	- `nuxt.config.js`の`modules`に追記
-- Nuxtの[example](https://github.com/nuxt/nuxt.js/tree/dev/examples/typescript)だと動かない
-	- SFCで`lang=ts`が使えない
+- nuxt.jsの[example](https://github.com/nuxt/nuxt.js/tree/dev/examples/typescript)だと動かない
+	- `.vue`で`lang=ts`が使えない
 
 ---
 
@@ -419,7 +419,7 @@ export default function({
 
 ---
 
-# testコード
+# testコードの雰囲気
 
 [.code-highlight: all]
 [.code-highlight: 5]
@@ -427,6 +427,8 @@ export default function({
 import authRouting from '~/middleware/authenticated-routing'
 
 describe('authRouting', () => {
+  const store = ...
+  const route = ...
   const redirect = jest.fn()
   authRouting({store, route, redirect})
   expect(redirect).toHaveBeenCalledWith('/login')
@@ -475,7 +477,8 @@ const router = new VueRouter({routes})
 ```ts
 test.each([
   ['/login', '/',  true],
-  ['/services', '/login', false]
+  ['/services', '/login', false],
+  ['/users', '/login', false]
 ])('redirect from %s to %s', ({current, next, loggedIn}: object) => {
 	const store = createStore(() => loggedIn)
     router.push(current)
@@ -485,6 +488,12 @@ test.each([
     expect(redirect).toHaveBeenCalledWith(next)
   })
 ```
+
+---
+
+# SSR実行環境編
+
+![original](https://c1.staticflickr.com/9/8331/8098153091_829653eb3f_h.jpg)
 
 ---
 
@@ -515,7 +524,7 @@ test.each([
 	- Node10
 	- Yarn対応
 	- `gcp-build`をdeploy時に実行
-		- bugってて2週間以内にroll outされる:bug:
+		- bugっててfix版が2週間以内にroll outされる:bug:
 
 ---
 
@@ -653,11 +662,12 @@ env_variables:
 
 ---
 
-Thanks for Background Images:bow:
+# Thanks for Background Images:bow:
 
 - [https://flic.kr/p/27JjtFU](https://flic.kr/p/27JjtFU)
 - [https://flic.kr/p/mP6Dya](https://flic.kr/p/mP6Dya)
 - [https://flic.kr/p/au12Fm](https://flic.kr/p/au12Fm)
 - [https://flic.kr/p/au1269](https://flic.kr/p/au1269)
+- [https://flic.kr/p/dkB9Ma](https://flic.kr/p/dkB9Ma)
 - [https://flic.kr/p/8PSXBu](https://flic.kr/p/8PSXBu)
 - [https://flic.kr/p/Mu9r8K](https://flic.kr/p/Mu9r8K)
