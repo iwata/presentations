@@ -16,18 +16,20 @@ Theme: Business Class,5
 ![80% original](./img/iwata.jpg)
 
 - [@iwata](https://github.com/iwata)
+	- 熊本出身
 - Software Engineer
-	- 株式会社エスエムエス
+	- 株式会社エスエムエス(約1年半)
 - Vue歴約4年
 	- Nuxt歴7ヶ月:beginner:
 	- TypeScript歴2ヶ月:beginner::beginner:
 - Editor: Vim(NeoVim)
 - Terminal: [Alacritty](https://github.com/jwilm/alacritty)
-	- A cross-platform, GPU-accelerated terminal emulator
 
 ---
 
 # [fit] よろしくお願いします:innocent: 
+
+![original](https://c1.staticflickr.com/2/1743/42485731142_fbec890715_h.jpg)
 
 ---
 
@@ -39,6 +41,14 @@ Theme: Business Class,5
 	- Testing about Middleware
 - SSR編
 	- GoogleAppEngine SE Node
+
+---
+
+```
+＿人人人人人人人人人人＿
+＞　突然の質問タイム　＜
+￣Y^Y^Y^Y^Y^Y^Y^Y^Y￣
+```
 
 ---
 
@@ -58,15 +68,15 @@ Theme: Business Class,5
 
 ---
 
-# TypeScriptやってみたい人:raising_hand:
-	
-![original](https://c1.staticflickr.com/7/6213/6224076462_9095b83e06_b.jpg)
-
----
-
 [とあるHTML5 Conferrence](https://twitter.com/__sakito__/status/1066851267455025152)
 
 ![fit original](./img/html5.jpg)
+
+---
+
+# TypeScriptやってみたい人:raising_hand:
+	
+![original](https://c1.staticflickr.com/7/6213/6224076462_9095b83e06_b.jpg)
 
 ---
 
@@ -84,12 +94,14 @@ Theme: Business Class,5
 
 # Agenda(再掲)
 
-- TypeScript編
+- TypeScript編[^1]
 	- module for TS
 	- Improve Source Map
 	- Testing about Middleware
-- SSR編
+- SSR環境編
 	- GoogleAppEngine StandardEnviroment Node
+
+[^1]: [UIT#5](https://slides.com/iwatamotonori/uit5)で話さなかったこと
 
 ---
 
@@ -101,7 +113,6 @@ Theme: Business Class,5
 	- `nuxt.config.js`の`modules`に追記
 - Nuxtの[example](https://github.com/nuxt/nuxt.js/tree/dev/examples/typescript)だと動かない
 	- SFCで`lang=ts`が使えない
-
 
 ---
 
@@ -196,7 +207,7 @@ module.exports = function() {
 
 ---
 
-# nuxt buildの実測値[^1]
+# nuxt buildの実測値[^2]
 
 | lang | fork-ts-checker | build.cache | client(ms) | server(ms) | total(min) |
 | ------------ | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -207,7 +218,7 @@ module.exports = function() {
 | TS | enable | false | 32077 | 10651 | 0.71 |
 | TS | enable | true | 12784 | 12456 | 0.42 |
 
-[^1]: 計測時のNuxtだと`nuxt`では実行時間出力してくれなかったがいまは`nuxt`でも出力される
+[^2]: 計測時のNuxtだと`nuxt`では実行時間出力してくれなかったがv2.3からは`nuxt`でも出力される
 
 ^ Dual Core i5 MBP13
 
@@ -400,9 +411,9 @@ export default function({
 
 1. `redirect`をmock
 1. 関数(`authRouting`)を任意の`store`, `route`で実行
-1. `redirect` mockの`toHaveBeenCalledWith`[^2]で期待するredirect先になるかをtest
+1. `redirect` mockの`toHaveBeenCalledWith`[^3]で期待するredirect先になるかをtest
 
-[^2]: Jest前提
+[^3]: Jest前提
 
 ---
 
@@ -482,7 +493,7 @@ test.each([
 - IaaS?
 	- EC2, GCE
 - CaaS?
-	- ECS, EKS, GKE
+	- ECS, EKS, GKE, AKS
 - PaaS?
 	- Heroku, GAE
 - Serverless?
@@ -506,9 +517,9 @@ test.each([
 
 ---
 
-# Demo[^3]
+# Demo[^4]
 
-- Sample[^4]
+- Sample[^5]
 	- [https://github.com/iwata/nuxt-gae-se](https://github.com/iwata/nuxt-gae-se)
 	
 ```sh
@@ -522,9 +533,9 @@ test.each([
 > gcloud app browse
 ```
 
-[^3]: `gcp-build`のバグ直ると`yarn build`が不要になる
+[^4]: `gcp-build`のバグ直ると`yarn build`が不要になる
 
-[^4]: より詳しくは[Nuxt\.js v2とGAE/SE Node\.jsでSPA×SSR×PWA×サーバーレスを実現する](https://inside.dmm.com/entry/2018/11/06/nuxt2-pwa-gae-se)を参照
+[^5]: より詳しくは[Nuxt\.js v2とGAE/SE Node\.jsでSPA×SSR×PWA×サーバーレスを実現する](https://inside.dmm.com/entry/2018/11/06/nuxt2-pwa-gae-se)を参照
 
 ---
 
@@ -606,14 +617,15 @@ env_variables:
 
 # ありがとうございました<br>:clap::clap:
 	
-![original](https://c1.staticflickr.com/9/8610/15787583555_3cec80e07b_h.jpg)
+![original](https://c1.staticflickr.com/6/5645/29854561893_107554639f_h.jpg)
 
 ---
 
 Thanks for Background Images:bow:
 
+- [https://flic.kr/p/27JjtFU](https://flic.kr/p/27JjtFU)
 - [https://flic.kr/p/mP6Dya](https://flic.kr/p/mP6Dya)
 - [https://flic.kr/p/au12Fm](https://flic.kr/p/au12Fm)
 - [https://flic.kr/p/au1269](https://flic.kr/p/au1269)
 - [https://flic.kr/p/8PSXBu](https://flic.kr/p/8PSXBu)
-- [https://flic.kr/p/q46uyt](https://flic.kr/p/q46uyt)
+- [https://flic.kr/p/Mu9r8K](https://flic.kr/p/Mu9r8K)
