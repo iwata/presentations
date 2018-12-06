@@ -634,6 +634,17 @@ env_variables:
 
 ---
 
+# We're hiring engineers🤝
+
+![fit right](https://www.bm-sms.co.jp/wp-content/themes/corp_2017/images/assets/logo.png)
+
+> エス・エム・エスは高齢社会における事業領域を「介護」「医療」「ヘルスケア」「シニアライフ」と定義し、主にインターネットを活用したサービスを展開しています。
+
+- 💁‍♀️[株式会社エス・エム・エス エンジニア採用情報](https://careers.bm-sms.co.jp/engineer/)
+- もしくはお近くのSMS社員まで
+
+---
+
 # ありがとうございました<br>:clap::clap:
 	
 ![original](https://c1.staticflickr.com/6/5645/29854561893_107554639f_h.jpg)
