@@ -19,8 +19,8 @@ Theme: Business Class,5
 - Software Engineer
 	- 株式会社エスエムエス
 - Vue歴約4年
-	- Nuxt歴半年:beginner:
-	- TypeScript歴1ヶ月:beginner::beginner:
+	- Nuxt歴7ヶ月:beginner:
+	- TypeScript歴2ヶ月:beginner::beginner:
 - Editor: Vim(NeoVim)
 - Terminal: [Alacritty](https://github.com/jwilm/alacritty)
 	- A cross-platform, GPU-accelerated terminal emulator
@@ -38,7 +38,7 @@ Theme: Business Class,5
 	- Improve Source Map
 	- Testing about Middleware
 - SSR編
-	- GoogleAppEngine StandardEnviroment Node
+	- GoogleAppEngine SE Node
 
 ---
 
@@ -475,6 +475,102 @@ test.each([
 
 ---
 
+# SSR実行環境
+
+![](https://c1.staticflickr.com/2/1126/5136315366_54de25551a_b.jpg)
+
+- IaaS?
+	- EC2, GCE
+- CaaS?
+	- ECS, EKS, GKE
+- PaaS?
+	- Heroku, GAE
+- Serverless?
+	- Lambda, Cloud Functions
+- On-Prem?
+
+---
+
+# Google App Engine Standard Environment Node.js
+
+![right fit](./img/app-engine.png)
+
+- Beta
+- GAE 2nd gen
+	- gVisor
+- [Node\.js 10 available for App Engine, in lockstep with Long Term Support](https://cloud.google.com/blog/products/application-development/announcing-nodejs-10-for-app-engine)
+	- Node10
+	- Yarn対応
+	- `gcp-build`をdeploy時に実行
+		- bugってて2週間以内にroll outされる:bug:
+
+---
+
+# Demo[^3]
+
+- Sample[^4]
+	- [https://github.com/iwata/nuxt-gae-se](https://github.com/iwata/nuxt-gae-se)
+	
+```sh
+> yarn install
+> yarn build
+> gcloud app deploy
+> gcloud app browse
+> git stash pop; and git diff
+> yarn build
+> gcloud app deploy --no-promote -v blue
+> gcloud app browse
+```
+
+[^3]: `gcp-build`のバグ直ると`yarn build`が不要になる
+
+[^4]: より詳しくは[Nuxt\.js v2とGAE/SE Node\.jsでSPA×SSR×PWA×サーバーレスを実現する](https://inside.dmm.com/entry/2018/11/06/nuxt2-pwa-gae-se)を参照
+
+---
+
+# `app.yaml`
+
+```yaml
+runtime: nodejs10
+env_variables:
+  NUXT_HOST: 0.0.0.0
+```
+
+- `0.0.0.0`で動く
+	- v2から[NUXT_HOST](https://nuxtjs.org/faq/host-port#with-nuxt_host-and-nuxt_port-env-variables)で指定できるようになった
+
+---
+
+# with Edge Cache
+
+静的コンテンツのCDN配信
+
+[.code-highlight: all]
+[.code-highlight: 2-7]
+```yaml
+runtime: nodejs10
+handlers:
+  - url: /_nuxt
+    static_dir: .nuxt/dist/client
+  - url: /(.*\.(gif|png|jpg|ico|txt))$
+    static_files: static/\1
+    upload: static/.*\.(gif|png|jpg|ico|txt)$
+env_variables:
+  NUXT_HOST: 0.0.0.0
+```
+
+---
+
 # ありがとうございました<br>:clap::clap:
 	
 ![original](https://c1.staticflickr.com/9/8610/15787583555_3cec80e07b_h.jpg)
+
+---
+
+Thanks for Background Images:bow:
+
+- [https://flic.kr/p/mP6Dya](https://flic.kr/p/mP6Dya)
+- [https://flic.kr/p/au12Fm](https://flic.kr/p/au12Fm)
+- [https://flic.kr/p/au1269](https://flic.kr/p/au1269)
+- [https://flic.kr/p/8PSXBu](https://flic.kr/p/8PSXBu)
+- [https://flic.kr/p/q46uyt](https://flic.kr/p/q46uyt)
